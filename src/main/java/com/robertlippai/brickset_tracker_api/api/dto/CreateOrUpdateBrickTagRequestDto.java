@@ -1,0 +1,10 @@
+package com.robertlippai.brickset_tracker_api.api.dto;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class CreateOrUpdateBrickTagRequestDto {
+    private String name;
+}

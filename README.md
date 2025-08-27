@@ -34,7 +34,7 @@ mvn spring-boot:run
 The API will be available at http://localhost:8080.
 
 ## API Endpoints
-The API provides CRUD operations for Sets and Brands.
+The API provides CRUD operations for Sets, Brands and Tags.
 
 ### Sets Controller
 The endpoints below all use the base URL: /api/sets
@@ -57,6 +57,19 @@ The endpoints below all use the base URL: `/api/brands`
 | POST   | /        | Creates a new Brick brand.                |
 | PUT    | /{id}    | Updates an existing Brick brand by its ID.|
 | DELETE | /{id}    | Deletes a Brick brand by its ID.          |
+
+### Tags Controller
+Base URL: `/api/tags`
+
+| Method | Endpoint | Description                              |
+|--------|----------|------------------------------------------|
+| GET    | /        | Retrieves a list of all tags.            |
+| GET    | /{id}    | Retrieves a single tag by its ID.        |
+| POST   | /        | Creates a new tag.                       |
+| PUT    | /{id}    | Updates an existing tag by its ID.       |
+| DELETE | /{id}    | Deletes a tag by its ID.                 |
+
+_Endpoints for managing the relationship between Sets and Tags (like adding a tag to a set) will be implemented soon._
 
 ## Roadmap
 **The following features are planned to bring it closer to the original Flask application and beyond:**

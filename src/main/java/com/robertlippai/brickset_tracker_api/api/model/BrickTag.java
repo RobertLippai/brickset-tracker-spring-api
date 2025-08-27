@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tag {
+public class BrickTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tid;
