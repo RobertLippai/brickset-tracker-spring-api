@@ -12,7 +12,7 @@ The primary goal is to demonstrate my ability to rapidly learn and apply new tec
 - H2 Database (In-Memory)
 
 ## Current Features
-- Full CRUD operations for brick sets.
+- Full CRUD operations for brick sets and brands.
 - A RESTful API architecture.
 
 ## How to Run
@@ -34,9 +34,10 @@ mvn spring-boot:run
 The API will be available at http://localhost:8080.
 
 ## API Endpoints
-Currently, only the Sets controller is implemented. 
-The endpoints below all use the base URL: /api/sets
+The API provides CRUD operations for Sets and Brands.
 
+### Sets Controller
+The endpoints below all use the base URL: /api/sets
 
 | Method | Endpoint | Description                              |
 |--------|----------|------------------------------------------|
@@ -46,6 +47,16 @@ The endpoints below all use the base URL: /api/sets
 | PUT    | /{id}    | Updates an existing Brick set by its ID. |
 | DELETE | /{id}    | Deletes a Brick set by its ID.           |
 
+### Brands Controller
+The endpoints below all use the base URL: `/api/brands`
+
+| Method | Endpoint | Description                               |
+|--------|----------|-------------------------------------------|
+| GET    | /        | Retrieves a list of all Brick brands.     |
+| GET    | /{id}    | Retrieves a single Brick brand by its ID. |
+| POST   | /        | Creates a new Brick brand.                |
+| PUT    | /{id}    | Updates an existing Brick brand by its ID.|
+| DELETE | /{id}    | Deletes a Brick brand by its ID.          |
 
 ## Roadmap
 **The following features are planned to bring it closer to the original Flask application and beyond:**
