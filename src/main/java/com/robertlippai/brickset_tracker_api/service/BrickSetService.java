@@ -11,6 +11,7 @@ import com.robertlippai.brickset_tracker_api.repository.BrickTagRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,8 +39,11 @@ public class BrickSetService {
         return brickSetRepository.findAll().stream().map(BrickSetDto::fromEntity).collect(Collectors.toList());
     }
 
+    @Transactional
     public BrickSetDto createBrickSet(CreateOrUpdateBrickSetRequestDto dto) {
-        BrickBrand brand = brickBrandRepository.findById(dto.getBrandId()).orElseThrow();
+        BrickBrand brand = brickBrandRepository.findById(dto.getBrandId()).orElseThrow(
+                () -> new EntityNotFoundException("BrickBrand not found with id: " + dto.getBrandId())
+        );
 
         BrickSet newBrickSet = new BrickSet();
         newBrickSet.setSetId(dto.getSetId());
@@ -57,8 +61,11 @@ public class BrickSetService {
         return BrickSetDto.fromEntity(newSetEntity);
     }
 
+    @Transactional
     public Optional<BrickSetDto> updateBrickSet(int id, CreateOrUpdateBrickSetRequestDto updatedBrickSet) {
-        BrickBrand newBrand = brickBrandRepository.findById(updatedBrickSet.getBrandId()).orElseThrow();
+        BrickBrand newBrand = brickBrandRepository.findById(updatedBrickSet.getBrandId()).orElseThrow(
+                () -> new EntityNotFoundException("BrickBrand not found with id: " + updatedBrickSet.getBrandId())
+        );
 
         return brickSetRepository.findById(id)
                 .map(existingSet -> {
@@ -75,6 +82,7 @@ public class BrickSetService {
                 }).map(BrickSetDto::fromEntity);
     }
 
+    @Transactional
     public boolean deleteBrickSet(int id) {
         if (brickSetRepository.existsById(id)) {
             brickSetRepository.deleteById(id);
@@ -83,12 +91,13 @@ public class BrickSetService {
         return false;
     }
 
+    @Transactional
     public BrickSetDto addTagToBrickSet(int brickSetId, int tagId) {
         BrickSet brickSetEntity = brickSetRepository.findById(brickSetId).orElseThrow(
                 () -> new EntityNotFoundException("BrickSet not found with id: " + brickSetId)
         );
         BrickTag brickTagEntity = brickTagRepository.findById(tagId).orElseThrow(
-                () -> new EntityNotFoundException("BrickTag not found with id: " + brickSetId)
+                () -> new EntityNotFoundException("BrickTag not found with id: " + tagId)
         );
 
         brickSetEntity.addTag(brickTagEntity);
@@ -97,13 +106,14 @@ public class BrickSetService {
         return BrickSetDto.fromEntity(savedEntity);
     }
 
+    @Transactional
     public void removeTagFromBrickSet(int brickSetId, int tagId) {
         BrickSet brickSetEntity = brickSetRepository.findById(brickSetId).orElseThrow(
                 () -> new EntityNotFoundException("BrickSet not found with id: " + brickSetId)
         );
 
         BrickTag brickTagEntity = brickTagRepository.findById(tagId).orElseThrow(
-                () -> new EntityNotFoundException("BrickTag not found with id: " + brickSetId)
+                () -> new EntityNotFoundException("BrickTag not found with id: " + tagId)
         );
 
         brickSetEntity.removeTag(brickTagEntity);

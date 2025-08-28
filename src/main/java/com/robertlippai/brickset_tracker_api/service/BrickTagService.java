@@ -6,6 +6,7 @@ import com.robertlippai.brickset_tracker_api.api.model.BrickTag;
 import com.robertlippai.brickset_tracker_api.repository.BrickTagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +29,7 @@ public class BrickTagService {
         return brickTagRepository.findAll().stream().map(BrickTagDto::fromEntity).collect(Collectors.toList());
     }
 
+    @Transactional
     public BrickTagDto createBrickTag(CreateOrUpdateBrickTagRequestDto brickTagRequestDto) {
         BrickTag brickTag = new BrickTag();
         brickTag.setName(brickTagRequestDto.getName());
@@ -37,14 +39,17 @@ public class BrickTagService {
         return BrickTagDto.fromEntity(newTagEntity);
     }
 
+    @Transactional
     public Optional<BrickTagDto> updateBrickTag(int id, CreateOrUpdateBrickTagRequestDto updatedBrickTag) {
         return brickTagRepository.findById(id)
                 .map(existingTag -> {
                     existingTag.setName(updatedBrickTag.getName());
-                    return brickTagRepository.save(existingTag);
-                }).map(BrickTagDto::fromEntity);
+                    var savedTag = brickTagRepository.save(existingTag);
+                    return BrickTagDto.fromEntity(savedTag);
+                });
     }
 
+    @Transactional
     public boolean deleteBrickTag(int id) {
         if (brickTagRepository.existsById(id)) {
             brickTagRepository.deleteById(id);
