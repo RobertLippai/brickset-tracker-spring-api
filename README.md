@@ -46,6 +46,8 @@ The endpoints below all use the base URL: /api/sets
 | POST   | /        | Creates a new Brick set.                 |
 | PUT    | /{id}    | Updates an existing Brick set by its ID. |
 | DELETE | /{id}    | Deletes a Brick set by its ID.           |
+| POST   | `/{id}/tags`      | Adds a tag to the set.                   |
+| DELETE | `/{id}/tags/{tagId}` | Removes a tag from the set.              |
 
 ### Brands Controller
 The endpoints below all use the base URL: `/api/brands`
@@ -69,7 +71,6 @@ Base URL: `/api/tags`
 | PUT    | /{id}    | Updates an existing tag by its ID.       |
 | DELETE | /{id}    | Deletes a tag by its ID.                 |
 
-_Endpoints for managing the relationship between Sets and Tags (like adding a tag to a set) will be implemented soon._
 
 ## Roadmap
 **The following features are planned to bring it closer to the original Flask application and beyond:**

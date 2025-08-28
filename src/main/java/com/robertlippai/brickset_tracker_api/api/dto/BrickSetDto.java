@@ -4,6 +4,9 @@ import com.robertlippai.brickset_tracker_api.api.model.BrickSet;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Getter
 @Setter
 public class BrickSetDto {
@@ -18,6 +21,8 @@ public class BrickSetDto {
     private Integer minifiguresCount;
     private String brandName;
 
+    private Set<BrickTagDto> tags;
+
     public static BrickSetDto fromEntity(BrickSet brickSet) {
         BrickSetDto dto = new BrickSetDto();
 
@@ -30,6 +35,8 @@ public class BrickSetDto {
         dto.setDescription(brickSet.getDescription());
         dto.setInstructionUrl(brickSet.getInstructionUrl());
         dto.setMinifiguresCount(brickSet.getMinifiguresCount());
+        dto.setTags(brickSet.getTags().stream().map(BrickTagDto::fromEntity).collect(Collectors.toSet()));
+
 
         if (brickSet.getBrand() != null) {
             dto.setBrandName(brickSet.getBrand().getName());

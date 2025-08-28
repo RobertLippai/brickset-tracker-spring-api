@@ -3,6 +3,7 @@ package com.robertlippai.brickset_tracker_api.api.controller;
 import com.robertlippai.brickset_tracker_api.api.dto.BrickSetDto;
 import com.robertlippai.brickset_tracker_api.api.dto.CreateOrUpdateBrickSetRequestDto;
 import com.robertlippai.brickset_tracker_api.service.BrickSetService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -52,5 +53,25 @@ public class BrickSetController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{setId}/tags/{tagId}")
+    public ResponseEntity<BrickSetDto> addTagToBrickSet(@PathVariable int setId,  @PathVariable int tagId) {
+        try {
+            BrickSetDto updatedSet = brickSetService.addTagToBrickSet(setId, tagId);
+            return ResponseEntity.ok(updatedSet);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{setId}/tags/{tagId}")
+    public ResponseEntity<Void> removeTagFromBrickSet(@PathVariable int setId,  @PathVariable int tagId) {
+        try {
+            brickSetService.removeTagFromBrickSet(setId, tagId);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

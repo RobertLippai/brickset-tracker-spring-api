@@ -46,5 +46,11 @@ public class BrickSet {
     )
     private Set<BrickTag> tags = new HashSet<>();
 
+    public void addTag(BrickTag tag) {
+        this.tags.add(tag);
+    }
 
+    public void removeTag(BrickTag tag) {
+        this.tags.remove(tag);
+    }
 }
