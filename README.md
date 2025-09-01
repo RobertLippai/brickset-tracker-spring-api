@@ -4,6 +4,8 @@ A RESTful API built with Java and Spring Boot. This is a WIP re-implementation o
 
 The primary goal is to demonstrate my ability to rapidly learn and apply new technologies within the Java/Spring ecosystem. Currently it provides CRUD operations for storing Brick (Lego) sets.
 
+_Note: The JWT authentication and authorization layer is currently under development. For now the security configuration is temporarily set to `permitAll()` for all endpoints to allow for testing._
+
 ## Tech
 - Java 17
 - Spring Boot 3
@@ -15,6 +17,14 @@ The primary goal is to demonstrate my ability to rapidly learn and apply new tec
 - Full CRUD operations for brick sets and brands.
 - A RESTful API architecture.
 
+## Configuration
+To run the application, you must set the following environment variables:
+
+| Variable Name    | Description                                                                                             | Example Value                                |
+| ---------------- | ------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| `JWT_SECRET_KEY` | A long, random, Base64-encoded string for signing JWTs. You can generate one [here](https://www.devglan.com/online-tools/hmac-sha256-online). | `your-super-long-and-secure-base64-secret-key` |
+| `DB_PASSWORD`    | The password for the H2 in-memory database. The default username is `sa`.                                 | `password`                                   |
+    
 ## How to Run
 **Prerequisites:**
 - JDK 17 or later
