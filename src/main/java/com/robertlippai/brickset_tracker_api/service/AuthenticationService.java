@@ -1,6 +1,6 @@
 package com.robertlippai.brickset_tracker_api.service;
 
-import com.robertlippai.brickset_tracker_api.api.dto.UserDto;
+import com.robertlippai.brickset_tracker_api.api.dto.AuthResponseDto;
 import com.robertlippai.brickset_tracker_api.api.dto.UserLoginRequestDto;
 import com.robertlippai.brickset_tracker_api.api.dto.UserRegistrationRequestDto;
 import com.robertlippai.brickset_tracker_api.api.model.User;
@@ -17,15 +17,17 @@ public class AuthenticationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     @Autowired
-    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public AuthenticationService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
     }
 
-    public UserDto registerUser(UserRegistrationRequestDto requestDto) {
+    public AuthResponseDto registerUser(UserRegistrationRequestDto requestDto) {
         if (userRepository.findByUsername(requestDto.getUsername()).isPresent()) {
             throw new IllegalStateException("Username already exists");
         }
@@ -36,10 +38,13 @@ public class AuthenticationService {
         newUser.setRole("USER");
 
         User savedUser = userRepository.save(newUser);
-        return UserDto.fromEntity(savedUser);
+
+        String jwtToken = jwtService.generateToken(savedUser);
+
+        return AuthResponseDto.builder().token(jwtToken).build();
     }
 
-    public UserDto loginUser(UserLoginRequestDto requestDto) {
+    public AuthResponseDto loginUser(UserLoginRequestDto requestDto) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         requestDto.getUsername(),
@@ -50,6 +55,9 @@ public class AuthenticationService {
         var user =  userRepository.findByUsername(requestDto.getUsername()).orElseThrow(
                 () -> new IllegalStateException("User not found"));
 
-        return UserDto.fromEntity(user);
+
+        String jwtToken = jwtService.generateToken(user);
+
+        return AuthResponseDto.builder().token(jwtToken).build();
     }
 }

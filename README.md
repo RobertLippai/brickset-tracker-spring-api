@@ -2,16 +2,18 @@
 
 A RESTful API built with Java and Spring Boot. This is a WIP re-implementation of the core backend logic from my original [Python, Flask application](https://github.com/RobertLippai/brickset_tracker).
 
-The primary goal is to demonstrate my ability to rapidly learn and apply new technologies within the Java/Spring ecosystem. Currently it provides CRUD operations for storing Brick (Lego) sets.
+The primary goal is to demonstrate my ability to rapidly learn and apply new technologies within the Java/Spring ecosystem.
 
-_Note: The JWT authentication and authorization layer is currently under development. For now the security configuration is temporarily set to `permitAll()` for all endpoints to allow for testing._
+The API is now secured using JWT-based authentication and authorization. All endpoints, except for registration and login, require a valid JWT token for access.
 
 ## Tech
 - Java 17
 - Spring Boot 3
 - Spring Web
 - Spring Data JPA
+- Spring Security
 - H2 Database (In-Memory)
+- JJWT (JSON Web Token Library)
 
 ## Current Features
 - Full CRUD operations for brick sets and brands.
@@ -46,8 +48,17 @@ The API will be available at http://localhost:8080.
 ## API Endpoints
 The API provides CRUD operations for Sets, Brands and Tags.
 
+### Authentication Controller
+Base URL: `/api/auth`
+
+| Method | Endpoint    | Description                                     |
+|--------|-------------|-------------------------------------------------|
+| POST   | `/register` | Creates a new user and returns a JWT.      |
+| POST   | `/login`    | Authenticates an existing user and returns a JWT. |
+
 ### Sets Controller
 The endpoints below all use the base URL: /api/sets
+_(Requires Authentication)_
 
 | Method | Endpoint | Description                              |
 |--------|----------|------------------------------------------|
@@ -61,6 +72,7 @@ The endpoints below all use the base URL: /api/sets
 
 ### Brands Controller
 The endpoints below all use the base URL: `/api/brands`
+_(Requires Authentication)_
 
 | Method | Endpoint | Description                               |
 |--------|----------|-------------------------------------------|
@@ -72,6 +84,7 @@ The endpoints below all use the base URL: `/api/brands`
 
 ### Tags Controller
 Base URL: `/api/tags`
+_(Requires Authentication)_
 
 | Method | Endpoint | Description                              |
 |--------|----------|------------------------------------------|
@@ -85,6 +98,5 @@ Base URL: `/api/tags`
 ## Roadmap
 **The following features are planned to bring it closer to the original Flask application and beyond:**
 - Migrate from the in-memory database to a persistent one, like PostgreSQL.
-- Implement security using Spring Security and JWT.
 - Add more complex query endpoints (searching, filtering, etc.).
 - Connect this API to a standalone frontend application.
