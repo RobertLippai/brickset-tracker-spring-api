@@ -1,7 +1,7 @@
 package com.robertlippai.brickset_tracker_api.api.config;
 
 import com.robertlippai.brickset_tracker_api.service.JwtService;
-import com.robertlippai.brickset_tracker_api.service.UserService;
+import com.robertlippai.brickset_tracker_api.service.AppUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,11 +19,11 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
-    private final UserService userService;
+    private final AppUserDetailsService appUserDetailsService;
 
-    public JwtAuthenticationFilter(JwtService jwtService, UserService userService) {
+    public JwtAuthenticationFilter(JwtService jwtService, AppUserDetailsService appUserDetailsService) {
         this.jwtService = jwtService;
-        this.userService = userService;
+        this.appUserDetailsService = appUserDetailsService;
     }
 
 
@@ -43,7 +43,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String username = jwtService.extractUsername(jwt);
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userService.loadUserByUsername(username);
+            UserDetails userDetails = this.appUserDetailsService.loadUserByUsername(username);
 
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
