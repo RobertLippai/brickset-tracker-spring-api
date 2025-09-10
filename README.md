@@ -56,6 +56,17 @@ Base URL: `/api/auth`
 | POST   | `/register` | Creates a new user and returns a JWT.      |
 | POST   | `/login`    | Authenticates an existing user and returns a JWT. |
 
+### User Controller
+Base URL: `/api/me`
+_(Requires Authentication)_
+
+| Method | Endpoint          | Description                                                      |
+|--------|-------------------|------------------------------------------------------------------|
+| GET    | `/sets`           | Retrieves all the sets from the current user's inventory.        |
+| POST   | `/sets`           | Adds a set to the current user's inventory.                      |
+| DELETE | `/sets/{setId}`   | Removes a set from the current user's inventory.                 |
+
+
 ### Sets Controller
 The endpoints below all use the base URL: /api/sets
 _(Requires Authentication)_
