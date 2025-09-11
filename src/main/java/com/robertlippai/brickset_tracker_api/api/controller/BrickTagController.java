@@ -1,7 +1,7 @@
 package com.robertlippai.brickset_tracker_api.api.controller;
 
-import com.robertlippai.brickset_tracker_api.api.dto.BrickTagDto;
-import com.robertlippai.brickset_tracker_api.api.dto.CreateOrUpdateBrickTagRequestDto;
+import com.robertlippai.brickset_tracker_api.api.dto.tag.BrickTagDto;
+import com.robertlippai.brickset_tracker_api.api.dto.tag.CreateOrUpdateBrickTagRequestDto;
 import com.robertlippai.brickset_tracker_api.service.BrickTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

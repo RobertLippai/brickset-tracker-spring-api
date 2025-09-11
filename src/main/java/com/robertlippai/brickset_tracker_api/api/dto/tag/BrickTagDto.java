@@ -1,4 +1,4 @@
-package com.robertlippai.brickset_tracker_api.api.dto;
+package com.robertlippai.brickset_tracker_api.api.dto.tag;
 
 import com.robertlippai.brickset_tracker_api.api.model.BrickTag;
 import lombok.Getter;

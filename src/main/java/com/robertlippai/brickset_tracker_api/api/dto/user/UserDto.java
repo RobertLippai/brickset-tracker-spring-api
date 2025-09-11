@@ -1,4 +1,4 @@
-package com.robertlippai.brickset_tracker_api.api.dto;
+package com.robertlippai.brickset_tracker_api.api.dto.user;
 
 import com.robertlippai.brickset_tracker_api.api.model.User;
 import lombok.Getter;

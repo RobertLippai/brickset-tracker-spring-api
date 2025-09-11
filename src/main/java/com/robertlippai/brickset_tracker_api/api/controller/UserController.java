@@ -1,7 +1,7 @@
 package com.robertlippai.brickset_tracker_api.api.controller;
 
-import com.robertlippai.brickset_tracker_api.api.dto.AddSetToCollectionRequestDto;
-import com.robertlippai.brickset_tracker_api.api.dto.BrickSetSummaryDto;
+import com.robertlippai.brickset_tracker_api.api.dto.set.AddSetToCollectionRequestDto;
+import com.robertlippai.brickset_tracker_api.api.dto.set.BrickSetSummaryDto;
 import com.robertlippai.brickset_tracker_api.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

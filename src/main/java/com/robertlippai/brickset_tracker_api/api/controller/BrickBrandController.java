@@ -1,7 +1,7 @@
 package com.robertlippai.brickset_tracker_api.api.controller;
 
-import com.robertlippai.brickset_tracker_api.api.dto.BrickBrandDto;
-import com.robertlippai.brickset_tracker_api.api.dto.CreateOrUpdateBrickBrandRequestDto;
+import com.robertlippai.brickset_tracker_api.api.dto.brand.BrickBrandDto;
+import com.robertlippai.brickset_tracker_api.api.dto.brand.CreateOrUpdateBrickBrandRequestDto;
 import com.robertlippai.brickset_tracker_api.service.BrickBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

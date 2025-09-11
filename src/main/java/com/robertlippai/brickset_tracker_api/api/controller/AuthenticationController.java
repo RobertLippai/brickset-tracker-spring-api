@@ -1,7 +1,7 @@
 package com.robertlippai.brickset_tracker_api.api.controller;
 
-import com.robertlippai.brickset_tracker_api.api.dto.UserLoginRequestDto;
-import com.robertlippai.brickset_tracker_api.api.dto.UserRegistrationRequestDto;
+import com.robertlippai.brickset_tracker_api.api.dto.auth.UserLoginRequestDto;
+import com.robertlippai.brickset_tracker_api.api.dto.auth.UserRegistrationRequestDto;
 import com.robertlippai.brickset_tracker_api.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

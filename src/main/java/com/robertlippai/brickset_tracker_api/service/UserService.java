@@ -1,6 +1,6 @@
 package com.robertlippai.brickset_tracker_api.service;
 
-import com.robertlippai.brickset_tracker_api.api.dto.BrickSetSummaryDto;
+import com.robertlippai.brickset_tracker_api.api.dto.set.BrickSetSummaryDto;
 import com.robertlippai.brickset_tracker_api.api.model.BrickSet;
 import com.robertlippai.brickset_tracker_api.api.model.User;
 import com.robertlippai.brickset_tracker_api.repository.BrickSetRepository;

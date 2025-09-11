@@ -1,5 +1,6 @@
-package com.robertlippai.brickset_tracker_api.api.dto;
+package com.robertlippai.brickset_tracker_api.api.dto.set;
 
+import com.robertlippai.brickset_tracker_api.api.dto.tag.BrickTagDto;
 import com.robertlippai.brickset_tracker_api.api.model.BrickSet;
 import lombok.Getter;
 import lombok.Setter;

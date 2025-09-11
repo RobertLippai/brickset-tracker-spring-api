@@ -1,7 +1,7 @@
 package com.robertlippai.brickset_tracker_api.service;
 
-import com.robertlippai.brickset_tracker_api.api.dto.BrickSetDto;
-import com.robertlippai.brickset_tracker_api.api.dto.CreateOrUpdateBrickSetRequestDto;
+import com.robertlippai.brickset_tracker_api.api.dto.set.BrickSetDto;
+import com.robertlippai.brickset_tracker_api.api.dto.set.CreateOrUpdateBrickSetRequestDto;
 import com.robertlippai.brickset_tracker_api.api.model.BrickBrand;
 import com.robertlippai.brickset_tracker_api.api.model.BrickSet;
 import com.robertlippai.brickset_tracker_api.api.model.BrickTag;
