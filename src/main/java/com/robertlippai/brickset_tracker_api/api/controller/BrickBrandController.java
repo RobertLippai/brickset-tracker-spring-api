@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/brands")
@@ -27,10 +26,7 @@ public class BrickBrandController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BrickBrandDto> getBrickBrand(@PathVariable int id){
-        Optional<BrickBrandDto> brickBrand = brickBrandService.getBrickBrand(id);
-
-        return brickBrand.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(brickBrandService.getBrickBrand(id));
     }
 
     @PostMapping
@@ -40,16 +36,12 @@ public class BrickBrandController {
 
     @PutMapping("/{id}")
     public ResponseEntity<BrickBrandDto> updateBrickBrand(@PathVariable int id, @RequestBody CreateOrUpdateBrickBrandRequestDto brickBrandRequestDto) {
-        return brickBrandService.updateBrickBrand(id, brickBrandRequestDto)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(brickBrandService.updateBrickBrand(id, brickBrandRequestDto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBrickBrand(@PathVariable int id) {
-        if (brickBrandService.deleteBrickBrand(id)) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        brickBrandService.deleteBrickBrand(id);
+        return ResponseEntity.noContent().build();
     }
 }

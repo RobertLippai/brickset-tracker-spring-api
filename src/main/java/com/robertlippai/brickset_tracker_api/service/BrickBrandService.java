@@ -4,12 +4,12 @@ import com.robertlippai.brickset_tracker_api.api.dto.brand.BrickBrandDto;
 import com.robertlippai.brickset_tracker_api.api.dto.brand.CreateOrUpdateBrickBrandRequestDto;
 import com.robertlippai.brickset_tracker_api.api.model.BrickBrand;
 import com.robertlippai.brickset_tracker_api.repository.BrickBrandRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,9 +21,11 @@ public class BrickBrandService {
         this.brickBrandRepository = brickBrandRepository;
     }
 
-    public Optional<BrickBrandDto> getBrickBrand(int id) {
-        return brickBrandRepository.findById(id).map(BrickBrandDto::fromEntity);
+    public BrickBrandDto getBrickBrand(int id) {
+        return brickBrandRepository.findById(id).map(BrickBrandDto::fromEntity)
+                .orElseThrow(() -> new EntityNotFoundException("BrickBrand with id " + id + " not found"));
     }
+
     public List<BrickBrandDto> getBrickBrands() {
         return brickBrandRepository.findAll().stream().map(BrickBrandDto::fromEntity).collect(Collectors.toList());
     }
@@ -40,22 +42,22 @@ public class BrickBrandService {
     }
 
     @Transactional
-    public Optional<BrickBrandDto> updateBrickBrand(int id, CreateOrUpdateBrickBrandRequestDto updatedBrickBrand) {
-        return brickBrandRepository.findById(id)
-                .map(existingBrand -> {
-                    existingBrand.setName(updatedBrickBrand.getName());
-                    existingBrand.setDescription(updatedBrickBrand.getDescription());
-                    var savedBrand = brickBrandRepository.save(existingBrand);
-                    return BrickBrandDto.fromEntity(savedBrand);
-                });
+    public BrickBrandDto updateBrickBrand(int id, CreateOrUpdateBrickBrandRequestDto updatedBrickBrand) {
+        BrickBrand existingBrand = brickBrandRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("BrickBrand with id " + id + " not found"));
+
+        existingBrand.setName(updatedBrickBrand.getName());
+        existingBrand.setDescription(updatedBrickBrand.getDescription());
+
+        BrickBrand savedBrand = brickBrandRepository.save(existingBrand);
+        return BrickBrandDto.fromEntity(savedBrand);
     }
 
     @Transactional
-    public boolean deleteBrickBrand(int id) {
-        if (brickBrandRepository.existsById(id)) {
-            brickBrandRepository.deleteById(id);
-            return true;
+    public void deleteBrickBrand(int id) {
+        if (!brickBrandRepository.existsById(id)) {
+            throw new EntityNotFoundException("BrickBrand with id " + id + " not found");
         }
-        return false;
+        brickBrandRepository.deleteById(id);
     }
 }

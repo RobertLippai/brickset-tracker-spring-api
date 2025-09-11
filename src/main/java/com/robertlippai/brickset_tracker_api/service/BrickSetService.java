@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,8 +30,9 @@ public class BrickSetService {
         this.brickTagRepository = brickTagRepository;
     }
 
-    public Optional<BrickSetDto> getBrickSet(int id) {
-        return brickSetRepository.findById(id).map(BrickSetDto::fromEntity);
+    public BrickSetDto getBrickSet(int id) {
+        return brickSetRepository.findById(id).map(BrickSetDto::fromEntity)
+                .orElseThrow(() -> new EntityNotFoundException("BrickSet with id " + id + " not found"));
     }
 
     public List<BrickSetDto> getBrickSets() {
@@ -41,9 +41,8 @@ public class BrickSetService {
 
     @Transactional
     public BrickSetDto createBrickSet(CreateOrUpdateBrickSetRequestDto dto) {
-        BrickBrand brand = brickBrandRepository.findById(dto.getBrandId()).orElseThrow(
-                () -> new EntityNotFoundException("BrickBrand not found with id: " + dto.getBrandId())
-        );
+        BrickBrand brand = brickBrandRepository.findById(dto.getBrandId())
+                .orElseThrow(() -> new EntityNotFoundException("BrickBrand not found with id: " + dto.getBrandId()));
 
         BrickSet newBrickSet = new BrickSet();
         newBrickSet.setSetId(dto.getSetId());
@@ -56,49 +55,48 @@ public class BrickSetService {
         newBrickSet.setMinifiguresCount(dto.getMinifiguresCount());
         newBrickSet.setBrand(brand);
 
-        var newSetEntity = brickSetRepository.save(newBrickSet);
+        BrickSet newSetEntity = brickSetRepository.save(newBrickSet);
 
         return BrickSetDto.fromEntity(newSetEntity);
     }
 
     @Transactional
-    public Optional<BrickSetDto> updateBrickSet(int id, CreateOrUpdateBrickSetRequestDto updatedBrickSet) {
-        BrickBrand newBrand = brickBrandRepository.findById(updatedBrickSet.getBrandId()).orElseThrow(
-                () -> new EntityNotFoundException("BrickBrand not found with id: " + updatedBrickSet.getBrandId())
-        );
+    public BrickSetDto updateBrickSet(int id, CreateOrUpdateBrickSetRequestDto updatedBrickSet) {
+        BrickBrand newBrand = brickBrandRepository.findById(updatedBrickSet.getBrandId())
+                .orElseThrow(() -> new EntityNotFoundException("BrickBrand not found with id: " + updatedBrickSet.getBrandId()));
 
-        return brickSetRepository.findById(id)
-                .map(existingSet -> {
-                    existingSet.setSetId(updatedBrickSet.getSetId());
-                    existingSet.setName(updatedBrickSet.getName());
-                    existingSet.setPieces(updatedBrickSet.getPieces());
-                    existingSet.setReleaseYear(updatedBrickSet.getReleaseYear());
-                    existingSet.setImageUrl(updatedBrickSet.getImageUrl());
-                    existingSet.setDescription(updatedBrickSet.getDescription());
-                    existingSet.setInstructionUrl(updatedBrickSet.getInstructionUrl());
-                    existingSet.setMinifiguresCount(updatedBrickSet.getMinifiguresCount());
-                    existingSet.setBrand(newBrand);
-                    return brickSetRepository.save(existingSet);
-                }).map(BrickSetDto::fromEntity);
+        BrickSet existingSet = brickSetRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("BrickSet with id " + id + " not found"));
+
+        existingSet.setSetId(updatedBrickSet.getSetId());
+        existingSet.setName(updatedBrickSet.getName());
+        existingSet.setPieces(updatedBrickSet.getPieces());
+        existingSet.setReleaseYear(updatedBrickSet.getReleaseYear());
+        existingSet.setImageUrl(updatedBrickSet.getImageUrl());
+        existingSet.setDescription(updatedBrickSet.getDescription());
+        existingSet.setInstructionUrl(updatedBrickSet.getInstructionUrl());
+        existingSet.setMinifiguresCount(updatedBrickSet.getMinifiguresCount());
+        existingSet.setBrand(newBrand);
+
+        BrickSet savedBrickSet = brickSetRepository.save(existingSet);
+
+        return BrickSetDto.fromEntity(savedBrickSet);
     }
 
     @Transactional
-    public boolean deleteBrickSet(int id) {
-        if (brickSetRepository.existsById(id)) {
-            brickSetRepository.deleteById(id);
-            return true;
+    public void deleteBrickSet(int id) {
+        if (!brickSetRepository.existsById(id)) {
+            throw new EntityNotFoundException("BrickSet with id " + id + " not found");
         }
-        return false;
+        brickSetRepository.deleteById(id);
     }
 
     @Transactional
     public BrickSetDto addTagToBrickSet(int brickSetId, int tagId) {
-        BrickSet brickSetEntity = brickSetRepository.findById(brickSetId).orElseThrow(
-                () -> new EntityNotFoundException("BrickSet not found with id: " + brickSetId)
-        );
-        BrickTag brickTagEntity = brickTagRepository.findById(tagId).orElseThrow(
-                () -> new EntityNotFoundException("BrickTag not found with id: " + tagId)
-        );
+        BrickSet brickSetEntity = brickSetRepository.findById(brickSetId)
+                .orElseThrow(() -> new EntityNotFoundException("BrickSet not found with id: " + brickSetId));
+        BrickTag brickTagEntity = brickTagRepository.findById(tagId)
+                .orElseThrow(() -> new EntityNotFoundException("BrickTag not found with id: " + tagId));
 
         brickSetEntity.addTag(brickTagEntity);
         BrickSet savedEntity = brickSetRepository.save(brickSetEntity);
@@ -108,13 +106,11 @@ public class BrickSetService {
 
     @Transactional
     public void removeTagFromBrickSet(int brickSetId, int tagId) {
-        BrickSet brickSetEntity = brickSetRepository.findById(brickSetId).orElseThrow(
-                () -> new EntityNotFoundException("BrickSet not found with id: " + brickSetId)
-        );
+        BrickSet brickSetEntity = brickSetRepository.findById(brickSetId)
+                .orElseThrow(() -> new EntityNotFoundException("BrickSet not found with id: " + brickSetId));
 
-        BrickTag brickTagEntity = brickTagRepository.findById(tagId).orElseThrow(
-                () -> new EntityNotFoundException("BrickTag not found with id: " + tagId)
-        );
+        BrickTag brickTagEntity = brickTagRepository.findById(tagId)
+                .orElseThrow(() -> new EntityNotFoundException("BrickTag not found with id: " + tagId));
 
         brickSetEntity.removeTag(brickTagEntity);
 

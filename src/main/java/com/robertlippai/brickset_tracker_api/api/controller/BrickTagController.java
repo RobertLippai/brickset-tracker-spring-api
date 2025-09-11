@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tags")
@@ -27,10 +26,7 @@ public class BrickTagController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BrickTagDto> getBrickTag(@PathVariable int id){
-        Optional<BrickTagDto> brickTag = brickTagService.getBrickTag(id);
-
-        return brickTag.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(brickTagService.getBrickTag(id));
     }
 
     @PostMapping
@@ -40,16 +36,12 @@ public class BrickTagController {
 
     @PutMapping("/{id}")
     public ResponseEntity<BrickTagDto> updateBrickTag(@PathVariable int id, @RequestBody CreateOrUpdateBrickTagRequestDto brickTagRequestDto) {
-        return brickTagService.updateBrickTag(id, brickTagRequestDto)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return ResponseEntity.ok(brickTagService.updateBrickTag(id, brickTagRequestDto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBrickTag(@PathVariable int id) {
-        if (brickTagService.deleteBrickTag(id)) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        brickTagService.deleteBrickTag(id);
+        return ResponseEntity.noContent().build();
     }
 }

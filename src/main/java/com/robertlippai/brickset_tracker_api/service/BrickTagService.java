@@ -4,12 +4,12 @@ import com.robertlippai.brickset_tracker_api.api.dto.tag.BrickTagDto;
 import com.robertlippai.brickset_tracker_api.api.dto.tag.CreateOrUpdateBrickTagRequestDto;
 import com.robertlippai.brickset_tracker_api.api.model.BrickTag;
 import com.robertlippai.brickset_tracker_api.repository.BrickTagRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,8 +21,9 @@ public class BrickTagService {
         this.brickTagRepository = brickTagRepository;
     }
 
-    public Optional<BrickTagDto> getBrickTag(int id) {
-        return brickTagRepository.findById(id).map(BrickTagDto::fromEntity);
+    public BrickTagDto getBrickTag(int id) {
+        return brickTagRepository.findById(id).map(BrickTagDto::fromEntity)
+                .orElseThrow(() -> new EntityNotFoundException("BrickTag with id " + id + " not found"));
     }
 
     public List<BrickTagDto> getBrickTags() {
@@ -40,21 +41,21 @@ public class BrickTagService {
     }
 
     @Transactional
-    public Optional<BrickTagDto> updateBrickTag(int id, CreateOrUpdateBrickTagRequestDto updatedBrickTag) {
-        return brickTagRepository.findById(id)
-                .map(existingTag -> {
-                    existingTag.setName(updatedBrickTag.getName());
-                    var savedTag = brickTagRepository.save(existingTag);
-                    return BrickTagDto.fromEntity(savedTag);
-                });
+    public BrickTagDto updateBrickTag(int id, CreateOrUpdateBrickTagRequestDto updatedBrickTag) {
+        BrickTag existingTag = brickTagRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("BrickTag with id " + id + " not found"));
+
+        existingTag.setName(updatedBrickTag.getName());
+
+        BrickTag savedTag = brickTagRepository.save(existingTag);
+        return BrickTagDto.fromEntity(savedTag);
     }
 
     @Transactional
-    public boolean deleteBrickTag(int id) {
-        if (brickTagRepository.existsById(id)) {
-            brickTagRepository.deleteById(id);
-            return true;
+    public void deleteBrickTag(int id) {
+        if (!brickTagRepository.existsById(id)) {
+            throw new EntityNotFoundException("BrickTag not found with id: " + id);
         }
-        return false;
+        brickTagRepository.deleteById(id);
     }
 }

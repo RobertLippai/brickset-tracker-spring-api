@@ -1,12 +1,12 @@
 package com.robertlippai.brickset_tracker_api.api.controller;
 
+import com.robertlippai.brickset_tracker_api.api.dto.auth.AuthResponseDto;
 import com.robertlippai.brickset_tracker_api.api.dto.auth.UserLoginRequestDto;
 import com.robertlippai.brickset_tracker_api.api.dto.auth.UserRegistrationRequestDto;
 import com.robertlippai.brickset_tracker_api.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,20 +24,13 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserRegistrationRequestDto requestDto) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(authService.registerUser(requestDto));
-        } catch (IllegalStateException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
-        }
+    public ResponseEntity<AuthResponseDto> register(@RequestBody UserRegistrationRequestDto requestDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(authService.registerUser(requestDto));
+
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginRequestDto requestDto) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(authService.loginUser(requestDto));
-        }  catch (BadCredentialsException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid username or password");
-        }
+    public ResponseEntity<AuthResponseDto> login(@RequestBody UserLoginRequestDto requestDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(authService.loginUser(requestDto));
     }
 }

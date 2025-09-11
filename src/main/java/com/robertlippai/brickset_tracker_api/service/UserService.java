@@ -30,7 +30,8 @@ public class UserService {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principal.getUsername();
 
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found: " + username));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found: " + username));
 
         return user.getOwnedSets().stream().map(BrickSetSummaryDto::fromEntity).collect(Collectors.toSet());
     }
@@ -40,12 +41,14 @@ public class UserService {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principal.getUsername();
 
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found: " + username));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found: " + username));
 
         BrickSet  brickSet = brickSetRepository.findById(brickSetId)
                 .orElseThrow(() -> new EntityNotFoundException("BrickSet not found with id: " + brickSetId));
 
         user.getOwnedSets().add(brickSet);
+        userRepository.save(user);
 
         return BrickSetSummaryDto.fromEntity(brickSet);
     }
@@ -55,7 +58,8 @@ public class UserService {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principal.getUsername();
 
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found: " + username));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new EntityNotFoundException("User not found: " + username));
 
         BrickSet setToRemove = user.getOwnedSets().stream()
                 .filter(set -> set.getSid() == setId)
@@ -63,5 +67,6 @@ public class UserService {
                 .orElseThrow(() -> new EntityNotFoundException("Set with id " + setId + " not found in user's collection."));
 
         user.getOwnedSets().remove(setToRemove);
+        userRepository.save(user);
     }
 }
