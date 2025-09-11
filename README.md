@@ -50,6 +50,7 @@ The API provides CRUD operations for Sets, Brands and Tags.
 
 ### Authentication Controller
 Base URL: `/api/auth`
+_(Public Endpoints)_
 
 | Method | Endpoint    | Description                                     |
 |--------|-------------|-------------------------------------------------|
@@ -69,45 +70,47 @@ _(Requires Authentication)_
 
 ### Sets Controller
 The endpoints below all use the base URL: /api/sets
-_(Requires Authentication)_
 
-| Method | Endpoint | Description                              |
-|--------|----------|------------------------------------------|
-| GET    | /        | Retrieves a list of all Brick sets.      |
-| GET    | /{id}    | Retrieves a single Brick set by its ID.  |
-| POST   | /        | Creates a new Brick set.                 |
-| PUT    | /{id}    | Updates an existing Brick set by its ID. |
-| DELETE | /{id}    | Deletes a Brick set by its ID.           |
-| POST   | `/{id}/tags`      | Adds a tag to the set.                   |
-| DELETE | `/{id}/tags/{tagId}` | Removes a tag from the set.              |
+| Method | Endpoint | Description                               | Security                |
+|--------|----------|-------------------------------------------|-------------------------|
+| GET    | /        | Retrieves a list of all Brick sets.       | Public                  |
+| GET    | /{id}    | Retrieves a single Brick set by its ID.   | Public                  |
+| POST   | /        | Creates a new Brick set.                  | Requires Authentication |
+| PUT    | /{id}    | Updates an existing Brick set by its ID.  | Requires Authentication |
+| DELETE | /{id}    | Deletes a Brick set by its ID.            | Requires Authentication |
+| POST   | `/{id}/tags`      | Adds a tag to the set.           | Requires Authentication |
+| DELETE | `/{id}/tags/{tagId}` | Removes a tag from the set.   | Requires Authentication |
 
 ### Brands Controller
 The endpoints below all use the base URL: `/api/brands`
-_(Requires Authentication)_
 
-| Method | Endpoint | Description                               |
-|--------|----------|-------------------------------------------|
-| GET    | /        | Retrieves a list of all Brick brands.     |
-| GET    | /{id}    | Retrieves a single Brick brand by its ID. |
-| POST   | /        | Creates a new Brick brand.                |
-| PUT    | /{id}    | Updates an existing Brick brand by its ID.|
-| DELETE | /{id}    | Deletes a Brick brand by its ID.          |
+| Method | Endpoint | Description                               | Security                |
+|--------|----------|-------------------------------------------|-------------------------|
+| GET    | /        | Retrieves a list of all Brick brands.     | Public                  |
+| GET    | /{id}    | Retrieves a single Brick brand by its ID. | Public                  |
+| POST   | /        | Creates a new Brick brand.                | Requires Authentication |
+| PUT    | /{id}    | Updates an existing Brick brand by its ID.| Requires Authentication |
+| DELETE | /{id}    | Deletes a Brick brand by its ID.          | Requires Authentication |
 
 ### Tags Controller
 Base URL: `/api/tags`
-_(Requires Authentication)_
 
-| Method | Endpoint | Description                              |
-|--------|----------|------------------------------------------|
-| GET    | /        | Retrieves a list of all tags.            |
-| GET    | /{id}    | Retrieves a single tag by its ID.        |
-| POST   | /        | Creates a new tag.                       |
-| PUT    | /{id}    | Updates an existing tag by its ID.       |
-| DELETE | /{id}    | Deletes a tag by its ID.                 |
+| Method | Endpoint | Description                              | Security                |
+|--------|----------|------------------------------------------|-------------------------|
+| GET    | /        | Retrieves a list of all tags.            | Public                  |
+| GET    | /{id}    | Retrieves a single tag by its ID.        | Public                  |
+| POST   | /        | Creates a new tag.                       | Requires Authentication |
+| PUT    | /{id}    | Updates an existing tag by its ID.       | Requires Authentication |
+| DELETE | /{id}    | Deletes a tag by its ID.                 | Requires Authentication |
 
 
 ## Roadmap
 **The following features are planned to bring it closer to the original Flask application and beyond:**
-- Migrate from the in-memory database to a persistent one, like PostgreSQL.
-- Add more complex query endpoints (searching, filtering, etc.).
-- Connect this API to a standalone frontend application.
+- [X] **Implement security using Spring Security and JWT.**
+- [ ] **Implement Role-Based Authorization**
+  -   Secure `POST`, `PUT`, and `DELETE` endpoints for sets, brands, and tags so they are only accessible to users with an `EDITOR` or `ADMIN` role. 
+- [ ] **Migrate to a Persistent Database**
+  - Migrate from the in-memory database to a persistent one, like PostgreSQL.
+- [ ] **Advanced Querying**
+  - Add more complex query endpoints (searching, filtering, etc.).
+-   [ ] **Build a Standalone Frontend**
