@@ -75,11 +75,11 @@ The endpoints below all use the base URL: /api/sets
 |--------|----------|-------------------------------------------|-------------------------|
 | GET    | /        | Retrieves a list of all Brick sets.       | Public                  |
 | GET    | /{id}    | Retrieves a single Brick set by its ID.   | Public                  |
-| POST   | /        | Creates a new Brick set.                  | Requires Authentication |
-| PUT    | /{id}    | Updates an existing Brick set by its ID.  | Requires Authentication |
-| DELETE | /{id}    | Deletes a Brick set by its ID.            | Requires Authentication |
-| POST   | `/{id}/tags`      | Adds a tag to the set.           | Requires Authentication |
-| DELETE | `/{id}/tags/{tagId}` | Removes a tag from the set.   | Requires Authentication |
+| POST   | /        | Creates a new Brick set.                  | Requires `ROLE_EDITOR`  |
+| PUT    | /{id}    | Updates an existing Brick set by its ID.  | Requires `ROLE_EDITOR`  |
+| DELETE | /{id}    | Deletes a Brick set by its ID.            | Requires `ROLE_EDITOR`  |
+| POST   | `/{id}/tags`      | Adds a tag to the set.           | Requires `ROLE_EDITOR`  |
+| DELETE | `/{id}/tags/{tagId}` | Removes a tag from the set.   | Requires `ROLE_EDITOR`  |
 
 ### Brands Controller
 The endpoints below all use the base URL: `/api/brands`
@@ -88,9 +88,9 @@ The endpoints below all use the base URL: `/api/brands`
 |--------|----------|-------------------------------------------|-------------------------|
 | GET    | /        | Retrieves a list of all Brick brands.     | Public                  |
 | GET    | /{id}    | Retrieves a single Brick brand by its ID. | Public                  |
-| POST   | /        | Creates a new Brick brand.                | Requires Authentication |
-| PUT    | /{id}    | Updates an existing Brick brand by its ID.| Requires Authentication |
-| DELETE | /{id}    | Deletes a Brick brand by its ID.          | Requires Authentication |
+| POST   | /        | Creates a new Brick brand.                | Requires `ROLE_EDITOR`  |
+| PUT    | /{id}    | Updates an existing Brick brand by its ID.| Requires `ROLE_EDITOR`  |
+| DELETE | /{id}    | Deletes a Brick brand by its ID.          | Requires `ROLE_EDITOR`  |
 
 ### Tags Controller
 Base URL: `/api/tags`
@@ -99,15 +99,15 @@ Base URL: `/api/tags`
 |--------|----------|------------------------------------------|-------------------------|
 | GET    | /        | Retrieves a list of all tags.            | Public                  |
 | GET    | /{id}    | Retrieves a single tag by its ID.        | Public                  |
-| POST   | /        | Creates a new tag.                       | Requires Authentication |
-| PUT    | /{id}    | Updates an existing tag by its ID.       | Requires Authentication |
-| DELETE | /{id}    | Deletes a tag by its ID.                 | Requires Authentication |
+| POST   | /        | Creates a new tag.                       | Requires `ROLE_EDITOR`  |
+| PUT    | /{id}    | Updates an existing tag by its ID.       | Requires `ROLE_EDITOR`  |
+| DELETE | /{id}    | Deletes a tag by its ID.                 | Requires `ROLE_EDITOR`  |
 
 
 ## Roadmap
 **The following features are planned to bring it closer to the original Flask application and beyond:**
 - [X] **Implement security using Spring Security and JWT.**
-- [ ] **Implement Role-Based Authorization**
+- [X] **Implement Role-Based Authorization**
   -   Secure `POST`, `PUT`, and `DELETE` endpoints for sets, brands, and tags so they are only accessible to users with an `EDITOR` or `ADMIN` role. 
 - [ ] **Migrate to a Persistent Database**
   - Migrate from the in-memory database to a persistent one, like PostgreSQL.

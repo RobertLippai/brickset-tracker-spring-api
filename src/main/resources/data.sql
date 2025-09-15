@@ -1,3 +1,15 @@
+INSERT INTO roles (name) VALUES ('ROLE_USER');
+INSERT INTO roles (name) VALUES ('ROLE_EDITOR');
+
+-- Sample User password: 123
+INSERT INTO users (username, password) VALUES ('testuser', '$2a$10$JFuKAqIQhd1Z2Mu8sD9SceEPZ4oT93NNQNKe2gqo7l.WtcO.bfkmq');
+INSERT INTO user_roles (user_id, role_id) VALUES (1, 1);
+
+-- Sample Editor password: 123
+INSERT INTO users (username, password) VALUES ('editor', '$2a$10$JFuKAqIQhd1Z2Mu8sD9SceEPZ4oT93NNQNKe2gqo7l.WtcO.bfkmq');
+INSERT INTO user_roles (user_id, role_id) VALUES (2, 1);
+INSERT INTO user_roles (user_id, role_id) VALUES (2, 2);
+
 INSERT INTO BRANDS(name) VALUES
     ('LEGO'),
     ('Lumibricks'),

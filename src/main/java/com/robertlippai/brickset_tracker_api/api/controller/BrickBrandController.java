@@ -5,6 +5,7 @@ import com.robertlippai.brickset_tracker_api.api.dto.brand.CreateOrUpdateBrickBr
 import com.robertlippai.brickset_tracker_api.service.BrickBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,16 +31,19 @@ public class BrickBrandController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('EDITOR')")
     public BrickBrandDto createBrickBrand(@RequestBody CreateOrUpdateBrickBrandRequestDto brickBrandRequestDto) {
         return brickBrandService.createBrickBrand(brickBrandRequestDto);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('EDITOR')")
     public ResponseEntity<BrickBrandDto> updateBrickBrand(@PathVariable int id, @RequestBody CreateOrUpdateBrickBrandRequestDto brickBrandRequestDto) {
         return ResponseEntity.ok(brickBrandService.updateBrickBrand(id, brickBrandRequestDto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('EDITOR')")
     public ResponseEntity<Void> deleteBrickBrand(@PathVariable int id) {
         brickBrandService.deleteBrickBrand(id);
         return ResponseEntity.noContent().build();

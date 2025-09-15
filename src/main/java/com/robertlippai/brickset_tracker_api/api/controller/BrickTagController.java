@@ -5,6 +5,7 @@ import com.robertlippai.brickset_tracker_api.api.dto.tag.CreateOrUpdateBrickTagR
 import com.robertlippai.brickset_tracker_api.service.BrickTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,16 +31,19 @@ public class BrickTagController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('EDITOR')")
     public BrickTagDto createBrickTag(@RequestBody CreateOrUpdateBrickTagRequestDto brickTagRequestDto) {
         return brickTagService.createBrickTag(brickTagRequestDto);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('EDITOR')")
     public ResponseEntity<BrickTagDto> updateBrickTag(@PathVariable int id, @RequestBody CreateOrUpdateBrickTagRequestDto brickTagRequestDto) {
         return ResponseEntity.ok(brickTagService.updateBrickTag(id, brickTagRequestDto));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('EDITOR')")
     public ResponseEntity<Void> deleteBrickTag(@PathVariable int id) {
         brickTagService.deleteBrickTag(id);
         return ResponseEntity.noContent().build();
