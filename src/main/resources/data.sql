@@ -10,10 +10,10 @@ INSERT INTO users (username, password) VALUES ('editor', '$2a$10$JFuKAqIQhd1Z2Mu
 INSERT INTO user_roles (user_id, role_id) VALUES (2, 1);
 INSERT INTO user_roles (user_id, role_id) VALUES (2, 2);
 
-INSERT INTO BRANDS(name) VALUES
-    ('LEGO'),
-    ('Lumibricks'),
-    ('Pantasy');
+INSERT INTO BRANDS (bid, name) VALUES
+    (1, 'LEGO'),
+    (2, 'Lumibricks'),
+    (3, 'Pantasy');
 
 INSERT INTO TAGS(name) VALUES
                              ('Halloween'),
@@ -25,3 +25,9 @@ INSERT INTO sets (set_id, name, pieces, release_year, image_url, description, in
 
 INSERT INTO sets (set_id, name, pieces, release_year, image_url, bid) VALUES
     ('10270', 'Bookshop', 2504, 2020, 'https://cdn.rebrickable.com/media/sets/10270-1.jpg', 1);
+
+INSERT INTO sets (set_id, name, pieces, release_year, image_url, bid) VALUES
+    ('L9095', 'Cyberpunk Game Stack', 2580, 2025, 'https://cdn.merlinsbricks.com/images/LUMI-L9095/LUMI-L9095-0.webp?v=1', 2);
+
+INSERT INTO sets (set_id, name, pieces, release_year, image_url, bid) VALUES
+    ('L9092', 'Midnight Haunted Mansion', 2617, 2025, 'https://cdn.merlinsbricks.com/images/LUMI-L9092/LUMI-L9092-0.webp?v=1', 2);

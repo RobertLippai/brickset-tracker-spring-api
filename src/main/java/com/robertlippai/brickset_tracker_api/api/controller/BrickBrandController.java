@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "${app.cors.allowed-origins}")
 @RequestMapping("/api/brands")
 public class BrickBrandController {
     private final BrickBrandService brickBrandService;

@@ -35,8 +35,16 @@ public class BrickSetService {
                 .orElseThrow(() -> new EntityNotFoundException("BrickSet with id " + id + " not found"));
     }
 
-    public List<BrickSetDto> getBrickSets() {
-        return brickSetRepository.findAll().stream().map(BrickSetDto::fromEntity).collect(Collectors.toList());
+    public List<BrickSetDto> getBrickSets(String brandName) {
+        List<BrickSet> sets;
+
+        if (brandName != null && !brandName.isBlank()) {
+            sets = brickSetRepository.findByBrandName(brandName);
+        } else {
+            sets = brickSetRepository.findAll();
+        }
+
+        return sets.stream().map(BrickSetDto::fromEntity).collect(Collectors.toList());
     }
 
     @Transactional

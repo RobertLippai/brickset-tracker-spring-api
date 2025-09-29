@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "${app.cors.allowed-origins}")
 @RequestMapping("/api/sets")
 public class BrickSetController {
 
@@ -22,8 +23,8 @@ public class BrickSetController {
     }
 
     @GetMapping
-    public List<BrickSetDto> getAllBrickSets(){
-        return brickSetService.getBrickSets();
+    public List<BrickSetDto> getAllBrickSets(@RequestParam(name = "brandName", required = false) String brandName){
+        return brickSetService.getBrickSets(brandName);
     }
 
     @GetMapping("/{id}")
