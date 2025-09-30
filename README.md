@@ -1,10 +1,20 @@
 # BrickSet Tracker - Spring Boot API
 
-A RESTful API built with Java and Spring Boot. This is a WIP re-implementation of the core backend logic from my original [Python, Flask application](https://github.com/RobertLippai/brickset_tracker).
+[![Fly Deploy](https://github.com/RobertLippai/brickset-tracker-api/actions/workflows/fly.yml/badge.svg)](https://github.com/RobertLippai/brickset-tracker-api/actions/workflows/fly.yml)
 
-The primary goal is to demonstrate my ability to rapidly learn and apply new technologies within the Java/Spring ecosystem.
 
-The API is now secured using JWT-based authentication and authorization. All endpoints, except for registration and login, require a valid JWT token for access.
+This project serves as the backend for the new **[Brickset Tracker - Vue Frontend](https://github.com/RobertLippai/brickset-tracker-frontend)**, and is a re-implementation of the logic from my original [Flask application](https://github.com/RobertLippai/brickset_tracker).
+
+The API is secured using JWT-based authentication and authorization. All endpoints, except for registration and login, require a valid JWT token for access.
+
+## Live API Endpoint
+
+The API is deployed on Fly.io and is live. You can interact with the public endpoints using tools like Postman, Insomnia, or `curl`.
+
+*   **Base URL:** `https://brickset-tracker-spring-api.fly.dev/api/sets`
+*   **API Base Path:** `/api`
+
+**Example:** To get all sets, you can make a `GET` request to `https://brickset-tracker-spring-api.fly.dev/api/sets`.
 
 ## Tech
 - Java 17
@@ -14,6 +24,7 @@ The API is now secured using JWT-based authentication and authorization. All end
 - Spring Security
 - H2 Database (In-Memory)
 - JJWT (JSON Web Token Library)
+- Containerized with Docker & deployed on Fly.io 
 
 ## Current Features
 - Full CRUD operations for brick sets and brands.
@@ -27,7 +38,7 @@ To run the application, you must set the following environment variables:
 | `JWT_SECRET_KEY` | A long, random, Base64-encoded string for signing JWTs. You can generate one [here](https://www.devglan.com/online-tools/hmac-sha256-online). | `your-super-long-and-secure-base64-secret-key` |
 | `DB_PASSWORD`    | The password for the H2 in-memory database. The default username is `sa`.                                 | `password`                                   |
     
-## How to Run
+## How to Run Locally
 **Prerequisites:**
 - JDK 17 or later
 - Apache Maven
@@ -109,8 +120,12 @@ Base URL: `/api/tags`
 - [X] **Implement security using Spring Security and JWT.**
 - [X] **Implement Role-Based Authorization**
   -   Secure `POST`, `PUT`, and `DELETE` endpoints for sets, brands, and tags so they are only accessible to users with an `EDITOR` or `ADMIN` role. 
+- [X] **CI/CD Integration:** Set up GitHub Actions to automatically deploy on push to main.
 - [ ] **Migrate to a Persistent Database**
   - Migrate from the in-memory database to a persistent one, like PostgreSQL.
 - [ ] **Advanced Querying**
   - Add more complex query endpoints (searching, filtering, etc.).
 -   [ ] **Build a Standalone Frontend**
+
+## Disclaimer
+> This project was created to showcase my work. The LEGO® sets and other brand assets (Lumibricks, Pantasy, etc.) shown are used for illustrative and demonstration purposes only. All trademarks and copyrights are the property of their respective owners. No copyright infringement is intended.
