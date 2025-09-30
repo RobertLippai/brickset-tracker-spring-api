@@ -1,6 +1,6 @@
 # BrickSet Tracker - Spring Boot API
 
-[![Fly Deploy](https://github.com/RobertLippai/brickset-tracker-api/actions/workflows/fly.yml/badge.svg)](https://github.com/RobertLippai/brickset-tracker-api/actions/workflows/fly.yml)
+[![Fly Deploy](https://github.com/RobertLippai/brickset-tracker-api/actions/workflows/fly-deploy.yml/badge.svg)](https://github.com/RobertLippai/brickset-tracker-api/actions/workflows/fly-deploy.yml)
 
 
 This project serves as the backend for the new **[Brickset Tracker - Vue Frontend](https://github.com/RobertLippai/brickset-tracker-frontend)**, and is a re-implementation of the logic from my original [Flask application](https://github.com/RobertLippai/brickset_tracker).
